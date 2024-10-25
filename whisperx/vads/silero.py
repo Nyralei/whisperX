@@ -57,6 +57,8 @@ class Silero(Vad):
                      chunk_size,
                      onset: float = 0.5,
                      offset: Optional[float] = None,
+                     min_duration_on: float = 0.0,
+                     min_duration_off: float = 0.0,
                      ):
         assert chunk_size > 0
         return Vad.merge_chunks(segments, chunk_size, onset, offset)
