@@ -147,7 +147,7 @@ class FasterWhisperPipeline(Pipeline):
         model: WhisperModel,
         vad,
         vad_params: dict,
-        options: NamedTuple,
+        options: faster_whisper.transcribe.TranscriptionOptions,
         tokenizer=None,
         device: Union[int, str, "torch.device"] = -1,
         framework="pt",
@@ -329,7 +329,7 @@ class FasterWhisperPipeline(Pipeline):
             print(f"Suppressing numeral and symbol tokens")
             new_suppressed_tokens = numeral_symbol_tokens + self.options.suppress_tokens
             new_suppressed_tokens = list(set(new_suppressed_tokens))
-            self.options = self.options._replace(suppress_tokens=new_suppressed_tokens)
+            self.options.suppress_tokens = new_suppressed_tokens
 
         segments: List[SingleSegment] = []
         batch_size = batch_size or self._batch_size
@@ -367,9 +367,7 @@ class FasterWhisperPipeline(Pipeline):
 
         # revert suppressed tokens if suppress_numerals is enabled
         if self.suppress_numerals:
-            self.options = self.options._replace(
-                suppress_tokens=previous_suppress_tokens
-            )
+            self.options.suppress_tokens = previous_suppress_tokens
 
         return {"task": task, "language": language, "duration": round(audio.shape[0] / SAMPLE_RATE, 3), "segments": segments}
 
@@ -470,11 +468,12 @@ def load_model(
         "word_timestamps": False,
         "prepend_punctuations": "\"'“¿([{-",
         "append_punctuations": "\"'.。,，!！?？:：”)]}、",
-        "suppress_numerals": False,
+        "multilingual": False,
         "max_new_tokens": None,
         "clip_timestamps": None,
         "hallucination_silence_threshold": None,
-        "hotwords": None
+        "hotwords": None,
+        "suppress_numerals": False,
     }
 
     if asr_options is not None:
