@@ -7,3 +7,7 @@ dist/
 venv/
 env/
 .venv/
+torch-home/
+hf-home/
+test-files/
+docker/

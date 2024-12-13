@@ -1,24 +1,24 @@
 <h1 align="center">WhisperX</h1>
 
 <p align="center">
-  <a href="https://github.com/m-bain/whisperX/stargazers">
-    <img src="https://img.shields.io/github/stars/m-bain/whisperX.svg?colorA=orange&colorB=orange&logo=github"
+  <a href="https://github.com/Nyralei/whisperX/stargazers">
+    <img src="https://img.shields.io/github/stars/Nyralei/whisperX.svg?colorA=orange&colorB=orange&logo=github"
          alt="GitHub stars">
   </a>
-  <a href="https://github.com/m-bain/whisperX/issues">
-        <img src="https://img.shields.io/github/issues/m-bain/whisperx.svg"
+  <a href="https://github.com/Nyralei/whisperX/issues">
+        <img src="https://img.shields.io/github/issues/Nyralei/whisperx.svg"
              alt="GitHub issues">
   </a>
-  <a href="https://github.com/m-bain/whisperX/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/m-bain/whisperX.svg"
+  <a href="https://github.com/Nyralei/whisperX/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/Nyralei/whisperX.svg"
              alt="GitHub license">
   </a>
   <a href="https://arxiv.org/abs/2303.00747">
         <img src="http://img.shields.io/badge/Arxiv-2303.00747-B31B1B.svg"
              alt="ArXiv paper">
   </a>
-  <a href="https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2Fm-bain%2FwhisperX">
-  <img src="https://img.shields.io/twitter/url/https/github.com/m-bain/whisperX.svg?style=social" alt="Twitter">
+  <a href="https://twitter.com/intent/tweet?text=&url=https%3A%2F%2Fgithub.com%2FNyralei%2FwhisperX">
+  <img src="https://img.shields.io/twitter/url/https/github.com/Nyralei/whisperX.svg?style=social" alt="Twitter">
   </a>      
 </p>
 
@@ -82,27 +82,20 @@ See other methods [here.](https://pytorch.org/get-started/previous-versions/#v20
 
 ### 3. Install this repo
 
-`pip install git+https://github.com/m-bain/whisperx.git`
+`pip install git+https://github.com/Nyralei/whisperx.git`
 
 If already installed, update package to most recent commit
 
-`pip install git+https://github.com/m-bain/whisperx.git --upgrade`
+`pip install git+https://github.com/Nyralei/whisperx.git --upgrade`
 
 If wishing to modify this package, clone and install in editable mode:
 ```
-$ git clone https://github.com/m-bain/whisperX.git
+$ git clone https://github.com/Nyralei/whisperX.git
 $ cd whisperX
 $ pip install -e .
 ```
 
 You may also need to install ffmpeg, rust etc. Follow openAI instructions here https://github.com/openai/whisper#setup.
-
-### Speaker Diarization
-To **enable Speaker Diarization**, include your Hugging Face access token (read) that you can generate from [Here](https://huggingface.co/settings/tokens) after the `--hf_token` argument and accept the user agreement for the following models: [Segmentation](https://huggingface.co/pyannote/segmentation-3.0) and [Speaker-Diarization-3.1](https://huggingface.co/pyannote/speaker-diarization-3.1) (if you choose to use Speaker-Diarization 2.x, follow requirements [here](https://huggingface.co/pyannote/speaker-diarization) instead.)
-
-> **Note**<br>
-> As of Oct 11, 2023, there is a known issue regarding slow performance with pyannote/Speaker-Diarization-3.0 in whisperX. It is due to dependency conflicts between faster-whisper and pyannote-audio 3.0.0. Please see [this issue](https://github.com/m-bain/whisperX/issues/499) for more details and potential workarounds.
-
 
 <h2 align="left" id="example">Usage 💬 (command line)</h2>
 
@@ -137,7 +130,7 @@ To run on CPU instead of GPU (and for running on Mac OS X):
 
 ### Other languages
 
-The phoneme ASR alignment model is *language-specific*, for tested languages these models are [automatically picked from torchaudio pipelines or huggingface](https://github.com/m-bain/whisperX/blob/e909f2f766b23b2000f2d95df41f9b844ac53e49/whisperx/transcribe.py#L22).
+The phoneme ASR alignment model is *language-specific*, for tested languages these models are [automatically picked from torchaudio pipelines or huggingface](https://github.com/Nyralei/whisperX/blob/e909f2f766b23b2000f2d95df41f9b844ac53e49/whisperx/transcribe.py#L22).
 Just pass in the `--language` code, and use the whisper `--model large`.
 
 Currently default models provided for `{en, fr, de, es, it, ja, zh, nl, uk, pt}`. If the detected language is not in this list, you need to find a phoneme-based ASR model from [huggingface model hub](https://huggingface.co/models) and test it on your data.
@@ -289,7 +282,7 @@ Great backend from [faster-whisper](https://github.com/guillaumekln/faster-whisp
 
 Those who have [supported this work financially](https://www.buymeacoffee.com/maxhbain) 🙏
 
-Finally, thanks to the OS [contributors](https://github.com/m-bain/whisperX/graphs/contributors) of this project, keeping it going and identifying bugs.
+Finally, thanks to the OS [contributors](https://github.com/Nyralei/whisperX/graphs/contributors) of this project, keeping it going and identifying bugs.
 
 <h2 align="left" id="cite">Citation</h2>
 If you use this in your research, please cite the paper:
