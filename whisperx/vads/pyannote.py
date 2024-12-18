@@ -18,8 +18,44 @@ from tqdm import tqdm
 from whisperx.diarize import Segment as SegmentX
 from whisperx.vads.vad import Vad
 
+# deprecated
 VAD_SEGMENTATION_URL = "https://whisperx.s3.eu-west-2.amazonaws.com/model_weights/segmentation/0b5b3216d60a2d32fc086b47ea8c67589aaeb26b7e07fcbe620d6d0b83e209ea/pytorch_model.bin"
 
+def load_vad_model(device, vad_onset=0.500, vad_offset=0.363, use_auth_token=None, model_fp=None):
+    model_dir = torch.hub._get_torch_home()
+
+    vad_dir = os.path.dirname(os.path.abspath(__file__))
+
+    os.makedirs(model_dir, exist_ok = True)
+    if model_fp is None:
+        # Dynamically resolve the path to the model file
+        model_fp = os.path.join(vad_dir, "assets", "pytorch_model.bin")
+        model_fp = os.path.abspath(model_fp)  # Ensure the path is absolute
+    else:
+        model_fp = os.path.abspath(model_fp)  # Ensure any provided path is absolute
+    
+    # Check if the resolved model file exists
+    if not os.path.exists(model_fp):
+        raise FileNotFoundError(f"Model file not found at {model_fp}")
+    
+    if os.path.exists(model_fp) and not os.path.isfile(model_fp):
+        raise RuntimeError(f"{model_fp} exists and is not a regular file")
+
+    model_bytes = open(model_fp, "rb").read()
+    if hashlib.sha256(model_bytes).hexdigest() != VAD_SEGMENTATION_URL.split('/')[-2]:
+        raise RuntimeError(
+            "Model has been downloaded but the SHA256 checksum does not match. Please retry loading the model."
+        )
+
+    vad_model = Model.from_pretrained(model_fp, use_auth_token=use_auth_token)
+    hyperparameters = {"onset": vad_onset, 
+                    "offset": vad_offset,
+                    "min_duration_on": 0.1,
+                    "min_duration_off": 0.1}
+    vad_pipeline = VoiceActivitySegmentation(segmentation=vad_model, device=torch.device(device))
+    vad_pipeline.instantiate(hyperparameters)
+
+    return vad_pipeline
 
 class Binarize:
     """Binarize detection scores using hysteresis thresholding, with min-cut operation
